@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dispatches & Essays — Aryan Sharma</title>
+  <meta name="description" content="Browse all essays on systems thinking, philosophy, and mental models from Aryan Sharma — software engineer and writer." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Fraunces', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            hand: ['Caveat', 'cursive'],
+          },
+          colors: {
+            canvas: '#FAF8F5',
+            card: '#FFFDFB',
+            borderPencil: '#E8E2D6',
+            ink: '#23211E',
+            lead: '#68655E',
+            leadMuted: '#949086',
+            matchaPastel: '#E2EBE5',
+            matchaDark: '#234230',
+            butterPastel: '#F9F4DF',
+            butterDark: '#5A4512',
+            mistPastel: '#E8ECEE',
+            mistDark: '#2D3E4E',
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(60, 50, 40, 0.04)',
+            'sticky': '0 6px 16px -2px rgba(60, 50, 40, 0.06)',
+            'cutout': '0 12px 30px -4px rgba(40, 30, 20, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FAF8F5;
+      background-image: radial-gradient(rgba(90, 80, 70, 0.14) 1px, transparent 1px);
+      background-size: 18px 18px;
+    }
+    .washi-strip {
+      background: rgba(235, 226, 214, 0.8);
+      border-left: 1.5px dashed rgba(190, 175, 155, 0.6);
+      border-right: 1.5px dashed rgba(190, 175, 155, 0.6);
+    }
+    section[id], article[id] {
+      scroll-margin-top: 5.5rem;
+    }
+  </style>
+</head>
+<body class="text-ink font-sans antialiased selection:bg-butterPastel min-h-screen">
+
+  <!-- Shared Header with full nav -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-canvas/90 border-b border-borderPencil py-3.5 px-6">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="font-serif text-lg tracking-tight text-ink hover:opacity-75 transition-opacity">
+        Aryan Sharma <span class="text-leadMuted font-mono text-xs font-normal">/ Thought Parlor</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden sm:flex items-center gap-6 text-xs font-mono text-lead">
+        <a href="index.html#about" class="hover:text-ink transition-colors">Who Am I</a>
+        <a href="index.html#experience" class="hover:text-ink transition-colors">Experience</a>
+        <a href="index.html#projects" class="hover:text-ink transition-colors">Projects</a>
+        <a href="index.html#teaching" class="hover:text-ink transition-colors">Teaching</a>
+        <a href="blogs.html" class="text-ink font-medium">Dispatches</a>
+        <a href="index.html#connect" class="hover:text-ink transition-colors">Contact</a>
+      </nav>
+
+      <!-- Mobile nav toggle -->
+      <button id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Toggle navigation menu" class="sm:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8">
+        <span class="block w-5 h-[1.5px] bg-ink transition-transform origin-center" id="navBar1"></span>
+        <span class="block w-5 h-[1.5px] bg-ink transition-opacity" id="navBar2"></span>
+        <span class="block w-5 h-[1.5px] bg-ink transition-transform origin-center" id="navBar3"></span>
+      </button>
+    </div>
+
+    <!-- Mobile nav panel -->
+    <nav id="mobileNav" class="sm:hidden hidden mt-3.5 pt-3.5 border-t border-borderPencil flex flex-col gap-3.5 px-1 text-sm font-mono text-lead">
+      <a href="index.html#about" class="hover:text-ink transition-colors">Who Am I</a>
+      <a href="index.html#experience" class="hover:text-ink transition-colors">Experience</a>
+      <a href="index.html#projects" class="hover:text-ink transition-colors">Projects</a>
+      <a href="index.html#teaching" class="hover:text-ink transition-colors">Teaching Adventures</a>
+      <a href="blogs.html" class="text-ink font-medium">Dispatches</a>
+      <a href="index.html#connect" class="hover:text-ink transition-colors">Contact</a>
+    </nav>
+  </header>
+
+  <script>
+    const navToggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const bar1 = document.getElementById('navBar1');
+    const bar3 = document.getElementById('navBar3');
+    let navOpen = false;
+    navToggle.addEventListener('click', () => {
+      navOpen = !navOpen;
+      mobileNav.classList.toggle('hidden', !navOpen);
+      navToggle.setAttribute('aria-expanded', String(navOpen));
+      bar1.style.transform = navOpen ? 'translateY(6px) rotate(45deg)' : '';
+      bar3.style.transform = navOpen ? 'translateY(-6px) rotate(-45deg)' : '';
+      bar1.parentElement.querySelector('#navBar2').style.opacity = navOpen ? '0' : '1';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navOpen = false;
+      mobileNav.classList.add('hidden');
+      navToggle.setAttribute('aria-expanded', 'false');
+      bar1.style.transform = '';
+      bar3.style.transform = '';
+      bar1.parentElement.querySelector('#navBar2').style.opacity = '1';
+    }));
+  </script>
+
+  <main class="max-w-6xl mx-auto px-6 py-12 space-y-12 pb-16">
+
+    <!-- Hero Title -->
+    <section class="space-y-3 border-b border-borderPencil pb-8">
+      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-butterPastel text-butterDark text-xs font-mono">
+        <span>Essays & Mental Models</span>
+      </div>
+      <h1 class="font-serif text-4xl sm:text-5xl font-medium text-ink tracking-tight">
+        The Reading Room.
+      </h1>
+      <p class="text-base text-lead max-w-xl leading-relaxed">
+        Jotting down lenses to experience new stories. Deconstructing everyday illusions, permanence, and systems thinking.
+      </p>
+    </section>
+
+    <!-- Dispatch Cards Grid (Listing) -->
+    <section class="space-y-6">
+      <div id="dispatchGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
+
+      <!-- Pagination -->
+      <div id="paginationBar" class="flex items-center justify-between pt-4 border-t border-borderPencil text-xs font-mono text-lead">
+        <button id="prevPage" class="px-3 py-1.5 rounded-md border border-borderPencil bg-card hover:bg-canvas transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+          ← Prev
+        </button>
+        <div id="pageIndicator" class="flex items-center gap-2"></div>
+        <button id="nextPage" class="px-3 py-1.5 rounded-md border border-borderPencil bg-card hover:bg-canvas transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+          Next →
+        </button>
+      </div>
+    </section>
+
+    <script>
+      // Dispatch catalog — add new entries here as essays go live.
+      // status: "published" links to a real post page. "upcoming" links to a coming-soon page.
+      const dispatches = [
+        {
+          title: "A Beautiful Room",
+          excerpt: "Why remodeling your life feels good for a week and then doesn't. On hedonic adaptation and aesthetic permanence.",
+          tag: "Philosophy",
+          tagBg: "bg-butterPastel", tagText: "text-butterDark",
+          readTime: "4 min read",
+          status: "published",
+          href: "beautiful-room.html"
+        },
+        {
+          title: "Code as a Living Organism",
+          excerpt: "Applying biological cell metabolism models to garbage collection, queue memory leaks, and distributed boundaries.",
+          tag: "Systems Thinking",
+          tagBg: "bg-matchaPastel", tagText: "text-matchaDark",
+          readTime: "Coming soon",
+          status: "upcoming",
+          href: "code-organism.html"
+        },
+        {
+          title: "The Feynman Razor for Engineers",
+          excerpt: "Why junior engineers rely on technical jargon, and why senior mastery is the art of extreme linguistic simplification.",
+          tag: "Pedagogy",
+          tagBg: "bg-butterPastel", tagText: "text-butterDark",
+          readTime: "Coming soon",
+          status: "upcoming",
+          href: "feynman-razor.html"
+        },
+      ];
+
+      const PER_PAGE = 4;
+      let currentPage = 1;
+      const totalPages = Math.max(1, Math.ceil(dispatches.length / PER_PAGE));
+
+      function renderCard(d) {
+        const statusBadge = d.status === "upcoming"
+          ? `<span class="text-[10px] font-mono text-leadMuted">Upcoming</span>`
+          : `<span class="text-[10px] font-mono text-leadMuted">${d.readTime}</span>`;
+
+        return `
+          <a href="${d.href}" class="group bg-card rounded-xl border border-borderPencil shadow-card p-6 flex flex-col justify-between space-y-4 hover:shadow-sticky transition-shadow">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] uppercase tracking-wider ${d.tagBg} ${d.tagText} px-2 py-0.5 rounded">${d.tag}</span>
+                ${statusBadge}
+              </div>
+              <h3 class="font-serif text-xl font-medium text-ink group-hover:underline">${d.title}</h3>
+              <p class="text-sm text-lead leading-relaxed">${d.excerpt}</p>
+            </div>
+            <span class="font-mono text-xs ${d.status === 'upcoming' ? 'text-leadMuted' : 'text-ink'} flex items-center gap-1">
+              ${d.status === 'upcoming' ? 'Preview' : 'Read Dispatch'} <span>→</span>
+            </span>
+          </a>
+        `;
+      }
+
+      function renderPage(page) {
+        currentPage = Math.min(Math.max(1, page), totalPages);
+        const start = (currentPage - 1) * PER_PAGE;
+        const pageItems = dispatches.slice(start, start + PER_PAGE);
+
+        document.getElementById('dispatchGrid').innerHTML = pageItems.map(renderCard).join('');
+
+        const indicator = document.getElementById('pageIndicator');
+        indicator.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement('button');
+          btn.textContent = i;
+          btn.className = `w-7 h-7 rounded-md border transition-colors ${i === currentPage ? 'bg-ink text-canvas border-ink' : 'bg-card border-borderPencil hover:bg-canvas'}`;
+          btn.addEventListener('click', () => renderPage(i));
+          indicator.appendChild(btn);
+        }
+
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = currentPage === totalPages;
+      }
+
+      document.getElementById('prevPage').addEventListener('click', () => renderPage(currentPage - 1));
+      document.getElementById('nextPage').addEventListener('click', () => renderPage(currentPage + 1));
+
+      renderPage(1);
+    </script>
+
+    <!-- Section: Connect & Footer -->
+    <footer id="connect" class="pt-8 border-t border-borderPencil space-y-8">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
+        <div class="space-y-2">
+          <h2 class="font-serif text-3xl font-medium text-ink">Let's connect.</h2>
+          <p class="text-sm text-lead">Available for Java backend systems and Agentic AI engineering roles.</p>
+        </div>
+        <div class="flex flex-wrap gap-3 font-mono text-xs">
+          <a href="mailto:heyaryanshandilya@gmail.com" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-butterPastel hover:text-butterDark transition-colors">Email</a>
+          <a href="https://linkedin.com/in/heyaryanshandilya" target="_blank" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-mistPastel hover:text-mistDark transition-colors">LinkedIn</a>
+          <a href="https://github.com" target="_blank" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-matchaPastel hover:text-matchaDark transition-colors">GitHub</a>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs font-mono text-lead pt-4 border-t border-borderPencil/50">
+        <a href="index.html" class="hover:text-ink underline decoration-dashed">← Back to System Specs & Experience</a>
+        <div class="flex gap-4 text-leadMuted">
+          <span>© 2026 Aryan Sharma</span>
+          <span>Gurugram, India</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</body>
+</html>

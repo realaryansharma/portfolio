@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aryan Sharma — Living Paper Ledger</title>
+  <meta name="description" content="Aryan Sharma — software engineer building fintech infrastructure by day, writing on systems thinking and mental models by night. Portfolio, essays, and teaching videos." />
+  <meta property="og:title" content="Aryan Sharma — Living Paper Ledger" />
+  <meta property="og:description" content="Developer, writer, teacher. Fintech systems by day, mental models and essays by night." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Fraunces', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            hand: ['Caveat', 'cursive'],
+          },
+          colors: {
+            canvas: '#FAF8F5',
+            card: '#FFFDFB',
+            borderPencil: '#E8E2D6',
+            ink: '#23211E',
+            lead: '#68655E',
+            leadMuted: '#949086',
+            
+            // Restrained, semantic pastels
+            matchaPastel: '#E2EBE5',
+            matchaDark: '#234230',
+            butterPastel: '#F9F4DF',
+            butterDark: '#5A4512',
+            mistPastel: '#E8ECEE',
+            mistDark: '#2D3E4E',
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(60, 50, 40, 0.04)',
+            'sticky': '0 6px 16px -2px rgba(60, 50, 40, 0.06)',
+            'cutout': '0 12px 30px -4px rgba(40, 30, 20, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FAF8F5;
+      background-image: radial-gradient(rgba(90, 80, 70, 0.14) 1px, transparent 1px);
+      background-size: 18px 18px;
+    }
+    .washi-strip {
+      background: rgba(235, 226, 214, 0.8);
+      border-left: 1.5px dashed rgba(190, 175, 155, 0.6);
+      border-right: 1.5px dashed rgba(190, 175, 155, 0.6);
+    }
+    section[id], footer[id] {
+      scroll-margin-top: 5.5rem;
+    }
+    .thumb-img {
+      filter: grayscale(100%);
+      transform: scale(1);
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+    a:hover .thumb-img {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="text-ink font-sans antialiased selection:bg-butterPastel min-h-screen">
+
+  <!-- Minimal Sticky Header -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-canvas/90 border-b border-borderPencil py-3.5 px-6">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="#" class="font-serif text-lg tracking-tight text-ink hover:opacity-75 transition-opacity">
+        Aryan Sharma <span class="text-leadMuted font-mono text-xs font-normal">/ living.ledger</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden sm:flex items-center gap-6 text-xs font-mono text-lead">
+        <a href="#about" class="hover:text-ink transition-colors">Who Am I</a>
+        <a href="#experience" class="hover:text-ink transition-colors">Experience</a>
+        <a href="#projects" class="hover:text-ink transition-colors">Projects</a>
+        <a href="#teaching" class="hover:text-ink transition-colors">Teaching</a>
+        <a href="#blogs" class="hover:text-ink transition-colors">Dispatches</a>
+        <a href="#connect" class="hover:text-ink transition-colors">Contact</a>
+      </nav>
+
+      <!-- Mobile nav toggle -->
+      <button id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Toggle navigation menu" class="sm:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8">
+        <span class="block w-5 h-[1.5px] bg-ink transition-transform origin-center" id="navBar1"></span>
+        <span class="block w-5 h-[1.5px] bg-ink transition-opacity" id="navBar2"></span>
+        <span class="block w-5 h-[1.5px] bg-ink transition-transform origin-center" id="navBar3"></span>
+      </button>
+    </div>
+
+    <!-- Mobile nav panel -->
+    <nav id="mobileNav" class="sm:hidden hidden mt-3.5 pt-3.5 border-t border-borderPencil flex flex-col gap-3.5 px-1 text-sm font-mono text-lead">
+      <a href="#about" class="hover:text-ink transition-colors">Who Am I</a>
+      <a href="#experience" class="hover:text-ink transition-colors">Experience</a>
+      <a href="#projects" class="hover:text-ink transition-colors">Projects</a>
+      <a href="#teaching" class="hover:text-ink transition-colors">Teaching Adventures</a>
+      <a href="#blogs" class="hover:text-ink transition-colors">Dispatches</a>
+      <a href="#connect" class="hover:text-ink transition-colors">Contact</a>
+    </nav>
+  </header>
+
+  <script>
+    const navToggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const bar1 = document.getElementById('navBar1');
+    const bar3 = document.getElementById('navBar3');
+    let navOpen = false;
+    navToggle.addEventListener('click', () => {
+      navOpen = !navOpen;
+      mobileNav.classList.toggle('hidden', !navOpen);
+      navToggle.setAttribute('aria-expanded', String(navOpen));
+      bar1.style.transform = navOpen ? 'translateY(6px) rotate(45deg)' : '';
+      bar3.style.transform = navOpen ? 'translateY(-6px) rotate(-45deg)' : '';
+      bar1.parentElement.querySelector('#navBar2').style.opacity = navOpen ? '0' : '1';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navOpen = false;
+      mobileNav.classList.add('hidden');
+      navToggle.setAttribute('aria-expanded', 'false');
+      bar1.style.transform = '';
+      bar3.style.transform = '';
+      bar1.parentElement.querySelector('#navBar2').style.opacity = '1';
+    }));
+  </script>
+
+  <main class="max-w-6xl mx-auto px-6 py-12 space-y-20 pb-16">
+
+    <!-- Section 1: Who Am I -->
+    <section id="about" class="relative pt-4">
+      <div class="relative bg-card rounded-xl p-8 sm:p-12 border border-borderPencil shadow-card space-y-6">
+        
+        <div class="space-y-3 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-butterPastel text-butterDark text-xs font-mono">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+            <span>Aryan Sharma = Constantly Evolving</span>
+          </div>
+
+          <h1 class="font-serif text-3xl sm:text-5xl font-medium tracking-tight leading-tight text-ink">
+            Developer, Artist, Writer, <br/>
+            <span class="italic font-normal text-lead">Explorer of Ideas.</span>
+          </h1>
+
+          <p class="text-base sm:text-lg text-lead leading-relaxed">
+            I treat code the way you'd treat any living organism—adaptive — you don't just build it once, you keep tending to it. That instinct is the same whether I'm shipping a feature or writing a sentence.
+          </p>
+        </div>
+
+        <!-- Sticky Notes: Restrained Semantic Pastels -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-6 border-t border-[#F2ECE1]">
+          
+          <!-- Note 1: What I Believe In -->
+          <div class="relative bg-butterPastel border border-[#EADBBD] p-6 rounded-lg shadow-sticky -rotate-1 hover:rotate-0 transition-transform">
+            <div class="absolute -top-3 left-6 w-16 h-5 washi-strip rotate-1 pointer-events-none"></div>
+            <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark font-medium block mb-1">What I believe in</span>
+            <p class="font-hand text-xl text-butterDark leading-snug">
+              I believe in shipping over perfecting. In owning the bug with my name on it. In learning loudly, not quietly. In being the kind of engineer people can hand hard, ambiguous problems to — and trust I'll figure it out.
+            </p>
+          </div>
+
+          <!-- Note 2: On Systems -->
+          <div class="relative bg-matchaPastel border border-[#C9D9CE] p-6 rounded-lg shadow-sticky rotate-1 hover:rotate-0 transition-transform">
+            <div class="absolute -top-3 left-6 w-16 h-5 washi-strip -rotate-2 pointer-events-none"></div>
+            <span class="font-mono text-[10px] uppercase tracking-wider text-matchaDark font-medium block mb-1">On systems</span>
+            <p class="font-hand text-xl text-matchaDark leading-snug">
+              A bug isn't a mistake in the system. It's the system working exactly as built — just not as intended.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 2: Experience (Fintech Track Record) -->
+    <section id="experience" class="space-y-6">
+      <div class="flex items-baseline justify-between border-b border-borderPencil pb-3">
+        <h2 class="font-serif text-2xl text-ink font-medium">Experience & Systems Telemetry</h2>
+        <span class="font-mono text-xs text-leadMuted">2.5+ Years Fintech Production</span>
+      </div>
+
+      <!-- OneStack Card -->
+      <div class="bg-card rounded-xl p-8 border border-borderPencil shadow-card space-y-6">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-0.5 rounded text-xs font-mono bg-matchaPastel text-matchaDark font-medium">SDE-1</span>
+              <h3 class="font-serif text-2xl font-medium text-ink">OneStack</h3>
+            </div>
+            <p class="text-xs text-lead font-mono mt-1">Core Fintech Infrastructure · Gurugram</p>
+          </div>
+          <span class="text-xs font-mono text-leadMuted bg-canvas px-3 py-1 rounded-full border border-borderPencil">March 2024 – Present</span>
+        </div>
+
+        <!-- Telemetry Strip -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3.5 px-5 rounded-lg bg-canvas border border-borderPencil">
+          <div>
+            <span class="text-[11px] text-lead font-mono block">NPCI Certification</span>
+            <span class="font-serif text-xl font-medium text-ink">100% Pass</span>
+          </div>
+          <div>
+            <span class="text-[11px] text-lead font-mono block">Monthly Settlements</span>
+            <span class="font-serif text-xl font-medium text-ink">40K+ Batches</span>
+          </div>
+          <div>
+            <span class="text-[11px] text-lead font-mono block">RBI Workflows</span>
+            <span class="font-serif text-xl font-medium text-ink">60% Auto</span>
+          </div>
+          <div>
+            <span class="text-[11px] text-lead font-mono block">Partner Onboarding</span>
+            <span class="font-serif text-xl font-medium text-ink">10 → 5 Days</span>
+          </div>
+        </div>
+
+        <!-- Detailed Impact Bullets with Subdued Highlighting -->
+        <ul class="space-y-3.5 text-sm leading-relaxed text-lead list-disc list-inside">
+          <li>
+            <strong class="text-ink">NPCI UPI & TransUnion CIBIL Certification:</strong> 
+            Led end-to-end certification by interpreting complex regulatory specifications to achieve <span class="text-matchaDark bg-matchaPastel/70 px-1.5 py-0.5 rounded font-medium">100% test-case clearance on the first attempt</span>. Built secure UPI payment flows using Factory Pattern architecture across PSP and banking switch systems.
+          </li>
+          <li>
+            <strong class="text-ink">YesBank Real-Time Reconciliation System:</strong> 
+            Architected platform managing 40K+ monthly settlements via 10-sec Supervisor batch runs. Deployed a no-code dashboard that <span class="text-butterDark bg-butterPastel px-1.5 py-0.5 rounded font-medium">cut manual reconciliation by 20+ hours per week</span> and auto-flagged 95% of discrepancies.
+          </li>
+          <li>
+            <strong class="text-ink">RBI Regulatory Compliance Automation:</strong> 
+            Automated ~60% of 120+ recurring RBI compliance reports, reducing manual workload from 11+ days to 4 days. Boosted Excel data mapping by 80% (50K+ cells) via BFS-based algorithms and reusable UI templates.
+          </li>
+          <li>
+            <strong class="text-ink">AI Document Ingestion Pipeline:</strong> 
+            Developed parsing pipeline using Python, OCR, and OpenAI API embeddings for automated extraction from 50+ financial statement formats with 60%+ accuracy, saving ~40 hours/month of verification overhead.
+          </li>
+        </ul>
+
+        <!-- Note 3: Say it once, say it right -->
+        <div class="relative bg-mistPastel border border-[#D3DCE0] p-6 rounded-lg shadow-sticky rotate-1 hover:rotate-0 transition-transform max-w-md">
+          <div class="absolute -top-3 right-8 w-16 h-5 washi-strip rotate-2 pointer-events-none"></div>
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mistDark font-medium block mb-1">Say it once, say it right</span>
+          <p class="font-hand text-xl text-mistDark leading-snug">
+            Most miscommunication isn't a knowledge gap. It's a laziness gap — it's easier to ramble than to think first. Precise beats verbose, every single time.
+          </p>
+        </div>
+      </div>
+
+      <!-- Internships Card: Two dated stints, same company -->
+      <div class="bg-card rounded-xl p-6 border border-borderPencil shadow-card space-y-5">
+        <div class="flex items-center justify-between">
+          <h3 class="font-serif text-lg font-medium text-ink">Behind Methods</h3>
+          <span class="text-xs font-mono text-leadMuted">Kurukshetra</span>
+        </div>
+
+        <!-- Sub-entry: First stint -->
+        <div class="pl-4 border-l-2 border-borderPencil space-y-1.5">
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="font-serif text-base font-medium text-ink">Software Developer Intern</span>
+              <span class="text-xs font-mono text-leadMuted">· First Stint</span>
+            </div>
+            <span class="text-xs font-mono text-leadMuted">June 2023 – July 2023</span>
+          </div>
+          <p class="text-xs text-lead leading-relaxed max-w-xl">
+            Implemented an Elementor-inspired drag-and-drop email editor, cutting customization time from 1 hour to about 20 minutes. Re-engineered vanilla JS into ECMAScript modules, halving front-end development time.
+          </p>
+        </div>
+
+        <!-- Sub-entry: Second stint -->
+        <div class="pl-4 border-l-2 border-borderPencil space-y-1.5">
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="font-serif text-base font-medium text-ink">Software Developer Intern</span>
+              <span class="text-xs font-mono text-leadMuted">· Second Stint</span>
+            </div>
+            <span class="text-xs font-mono text-leadMuted">June 2021 – November 2021</span>
+          </div>
+          <p class="text-xs text-lead leading-relaxed max-w-xl">
+            Designed and built the UI for Coin Discovery, featuring JavaScript-powered light/dark modes and dynamic data grids. Built "Dreamway Education," a fully functional WordPress site for an immigration consultancy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Projects (The Systems Workshop) -->
+    <section id="projects" class="space-y-6">
+      <div class="flex items-baseline justify-between border-b border-borderPencil pb-3">
+        <h2 class="font-serif text-2xl text-ink font-medium">The Systems Workshop</h2>
+        <span class="font-mono text-xs text-leadMuted">Selected Systems & Research</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+        <!-- Project 1: Woof Weather -->
+        <div class="bg-card rounded-xl p-8 border border-borderPencil shadow-card flex flex-col justify-between space-y-5">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono text-lead bg-canvas border border-borderPencil px-2 py-0.5 rounded">TensorFlow · LSTM</span>
+              <span class="text-[11px] font-mono text-leadMuted">Research</span>
+            </div>
+            <h3 class="font-serif text-2xl font-medium text-ink">Woof Weather: Sentiment Analysis</h3>
+            <p class="text-sm text-lead leading-relaxed">
+              Multimodal canine emotion classifier combining audio (Librosa) and visual cues (EfficientNet) with an interactive Streamlit UI. Led a 3-member team from data collection through to a working real-time demo.
+            </p>
+          </div>
+          <div class="flex items-center justify-between text-xs font-mono text-ink/80 pt-3 border-t border-borderPencil/60">
+            <span>Accuracy: 89% Visual / 67% Audio</span>
+            <a href="https://github.com/realaryansharma/DogEmotionPrediction" target="_blank" class="flex items-center gap-1 text-lead hover:text-ink transition-colors underline decoration-dashed">
+              <span>GitHub</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 2: Lead Tracker -->
+        <div class="bg-card rounded-xl p-8 border border-borderPencil shadow-card flex flex-col justify-between space-y-5">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono text-lead bg-canvas border border-borderPencil px-2 py-0.5 rounded">Vanilla JS · Chrome API</span>
+              <span class="text-[11px] font-mono text-leadMuted">Utility</span>
+            </div>
+            <h3 class="font-serif text-2xl font-medium text-ink">Lead Tracker Extension</h3>
+            <p class="text-sm text-lead leading-relaxed">
+              A published Chrome extension letting sales teams instantly save and annotate profiles or links from any webpage, built entirely on browser DOM methods with no backend or login required.
+            </p>
+          </div>
+          <div class="flex items-center justify-between text-xs font-mono text-ink/80 pt-3 border-t border-borderPencil/60">
+            <span>Execution: One-Click Instant Capture</span>
+            <a href="https://github.com/realaryansharma/leadTracker" target="_blank" class="flex items-center gap-1 text-lead hover:text-ink transition-colors underline decoration-dashed">
+              <span>GitHub</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Note 4: Learner & Ownership -->
+      <div class="relative bg-butterPastel border border-[#EADBBD] p-6 rounded-lg shadow-sticky -rotate-1 hover:rotate-0 transition-transform max-w-md ml-auto">
+        <div class="absolute -top-3 left-8 w-16 h-5 washi-strip -rotate-1 pointer-events-none"></div>
+        <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark font-medium block mb-1">On side projects</span>
+        <p class="font-hand text-xl text-butterDark leading-snug">
+          None of these were assigned to me. I'm a learner first — I go build the thing, then figure out ownership along the way.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: Teaching Adventures -->
+    <section id="teaching" class="space-y-6">
+      <div class="flex items-baseline justify-between border-b border-borderPencil pb-3">
+        <div>
+          <h2 class="font-serif text-2xl text-ink font-medium">Teaching Adventures</h2>
+          <p class="text-xs text-leadMuted font-mono mt-0.5">Videos where I break things down out loud</p>
+        </div>
+        <a href="https://www.youtube.com/@ifeelaware" target="_blank" class="font-mono text-xs text-mistDark bg-mistPastel hover:bg-[#DFE5E8] px-3.5 py-1.5 rounded-md border border-[#D3DCE0] transition-colors flex items-center gap-1.5 font-medium">
+          <span>Visit Channel</span>
+          <span>↗</span>
+        </a>
+      </div>
+
+      <!-- Feynman note anchoring the section -->
+      <div class="relative bg-matchaPastel border border-[#C9D9CE] p-6 rounded-lg shadow-sticky rotate-1 hover:rotate-0 transition-transform max-w-lg">
+        <div class="absolute -top-3 left-8 w-16 h-5 washi-strip rotate-2 pointer-events-none"></div>
+        <span class="font-mono text-[10px] uppercase tracking-wider text-matchaDark font-medium block mb-1">On teaching</span>
+        <p class="font-hand text-xl text-matchaDark leading-snug">
+          Feynman said if you can't explain it simply, you don't understand it. So I teach — it's the fastest way I know to find the gaps in my own thinking.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+        <!-- Video 1: APIs -->
+        <a href="https://www.youtube.com/watch?v=x6XqA5pZ2bY" target="_blank" class="group bg-card rounded-xl border border-borderPencil shadow-card overflow-hidden flex flex-col hover:shadow-sticky transition-shadow">
+          <div class="aspect-video bg-canvas border-b border-borderPencil relative overflow-hidden">
+            <img src="https://img.youtube.com/vi/x6XqA5pZ2bY/hqdefault.jpg" alt="What Exactly is an API? thumbnail" class="thumb-img w-full h-full object-cover" />
+          </div>
+          <div class="p-5 space-y-1.5">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-matchaDark">Systems Thinking</span>
+            <h3 class="font-serif text-base font-medium text-ink group-hover:underline">What Exactly is an API?</h3>
+            <p class="text-xs text-lead leading-relaxed">Breaking down the term everyone uses and few explain simply.</p>
+          </div>
+        </a>
+
+        <!-- Video 2: Scale of Validation -->
+        <a href="https://www.youtube.com/watch?v=d4zBlVXlZQQ" target="_blank" class="group bg-card rounded-xl border border-borderPencil shadow-card overflow-hidden flex flex-col hover:shadow-sticky transition-shadow">
+          <div class="aspect-video bg-canvas border-b border-borderPencil relative overflow-hidden">
+            <img src="https://img.youtube.com/vi/d4zBlVXlZQQ/hqdefault.jpg" alt="Scale of Validation thumbnail" class="thumb-img w-full h-full object-cover" />
+          </div>
+          <div class="p-5 space-y-1.5">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark">Philosophy</span>
+            <h3 class="font-serif text-base font-medium text-ink group-hover:underline">Scale of Validation</h3>
+            <p class="text-xs text-lead leading-relaxed">On measuring your worth by the wrong yardsticks — and finding better ones.</p>
+          </div>
+        </a>
+
+        <!-- Video 3: Webpage animation with HTML/CSS -->
+        <a href="https://www.youtube.com/watch?v=XSYKxji1k7w" target="_blank" class="group bg-card rounded-xl border border-borderPencil shadow-card overflow-hidden flex flex-col hover:shadow-sticky transition-shadow">
+          <div class="aspect-video bg-canvas border-b border-borderPencil relative overflow-hidden">
+            <img src="https://img.youtube.com/vi/XSYKxji1k7w/hqdefault.jpg" alt="Designing a webpage with HTML and CSS animation thumbnail" class="thumb-img w-full h-full object-cover" />
+          </div>
+          <div class="p-5 space-y-1.5">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-mistDark">Engineering</span>
+            <h3 class="font-serif text-base font-medium text-ink group-hover:underline">Designing a Webpage with Animation</h3>
+            <p class="text-xs text-lead leading-relaxed">Using just HTML and CSS — no frameworks, no shortcuts.</p>
+          </div>
+        </a>
+
+        <!-- Video 4: What is C Language -->
+        <a href="https://www.youtube.com/watch?v=PMML2rd-xLU" target="_blank" class="group bg-card rounded-xl border border-borderPencil shadow-card overflow-hidden flex flex-col hover:shadow-sticky transition-shadow">
+          <div class="aspect-video bg-canvas border-b border-borderPencil relative overflow-hidden">
+            <img src="https://img.youtube.com/vi/PMML2rd-xLU/hqdefault.jpg" alt="What is C Language? thumbnail" class="thumb-img w-full h-full object-cover" />
+          </div>
+          <div class="p-5 space-y-1.5">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark">Fundamentals</span>
+            <h3 class="font-serif text-base font-medium text-ink group-hover:underline">What is C Language?</h3>
+            <p class="text-xs text-lead leading-relaxed">Going back to where most of modern computing actually starts.</p>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Section 4: Written Dispatches (Preview + Route to blogs.html) -->
+    <section id="blogs" class="space-y-6">
+      <div class="flex items-baseline justify-between border-b border-borderPencil pb-3">
+        <div>
+          <h2 class="font-serif text-2xl text-ink font-medium">Written Dispatches</h2>
+          <p class="text-xs text-leadMuted font-mono mt-0.5">Philosophy, Mental Models & Distributed Systems</p>
+        </div>
+        <!-- Button opening the separate blog page -->
+        <a href="blogs.html" class="font-mono text-xs text-butterDark bg-butterPastel hover:bg-[#F2E7C6] px-3.5 py-1.5 rounded-md border border-[#EADBBD] transition-colors flex items-center gap-1.5 font-medium">
+          <span>Explore All Dispatches</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <!-- Lead Essay Preview Card -->
+      <article class="bg-card rounded-xl p-8 sm:p-10 border border-borderPencil shadow-card space-y-5">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded text-xs font-mono bg-butterPastel text-butterDark font-medium">Featured Essay</span>
+          <span class="text-xs font-mono text-leadMuted">· 4 min read</span>
+        </div>
+
+        <h3 class="font-serif text-2xl sm:text-3xl font-medium leading-snug text-ink">
+          A Beautiful Room: <br/>
+          <span class="italic font-normal text-lead">Why our temporary fixes loop us back to square one.</span>
+        </h3>
+
+        <!-- Core Quote Highlighting -->
+        <div class="p-6 rounded-lg bg-butterPastel/70 border-l-4 border-[#D8C795] space-y-1.5 my-2">
+          <p class="font-serif text-xl sm:text-2xl text-butterDark italic leading-relaxed">
+            "To make the room beautiful, you never had to change the room. You need to understand what is beauty to you that never dulls."
+          </p>
+          <span class="block text-xs font-mono text-butterDark/80">— Aryan Sharma</span>
+        </div>
+
+        <p class="text-sm leading-relaxed text-lead">
+          Have you ever felt stuck in your life? Where your solutions offer temporary relief, and even after understanding, the pattern repeats? It is perpetual. You furnish the room, praise floods in, but natural dullness inevitably arrives...
+        </p>
+
+        <!-- Note: Stimulus & Response, reframed around writing -->
+        <div class="relative bg-mistPastel border border-[#D3DCE0] p-6 rounded-lg shadow-sticky -rotate-1 hover:rotate-0 transition-transform max-w-md">
+          <div class="absolute -top-3 right-10 w-16 h-5 washi-strip rotate-1 pointer-events-none"></div>
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mistDark font-medium block mb-1">Why I write</span>
+          <p class="font-hand text-xl text-mistDark leading-snug">
+            Between stimulus and response, there is a space. Writing is how I stay in that space long enough to choose something worth saying.
+          </p>
+        </div>
+
+        <div class="pt-2 flex items-center justify-between border-t border-borderPencil text-xs font-mono">
+          <a href="beautiful-room.html" class="font-medium text-ink hover:underline flex items-center gap-1">
+            <span>Read Complete Monograph</span>
+            <span>→</span>
+          </a>
+          <span class="text-leadMuted">Video Discussion Attached</span>
+        </div>
+      </article>
+
+      <!-- Separate Blog Page Bridge Card -->
+      <div class="p-6 bg-card rounded-xl border border-borderPencil shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <h4 class="font-serif text-lg font-medium text-ink">The Thought Parlor (Library)</h4>
+          <p class="text-xs text-lead">Read upcoming essays on biological systems architectures and the Feynman razor.</p>
+        </div>
+        <a href="blogs.html" class="px-4 py-2 rounded-md bg-canvas border border-borderPencil hover:bg-mistPastel hover:text-mistDark font-mono text-xs transition-colors">
+          Open Dedicated Reader (blogs.html) →
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 5: Connect & Footer -->
+    <footer id="connect" class="pt-8 border-t border-borderPencil space-y-8">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
+        <div class="space-y-2">
+          <h2 class="font-serif text-3xl font-medium text-ink">Let's connect.</h2>
+          <p class="text-sm text-lead">Available for Java backend systems and Agentic AI engineering roles.</p>
+        </div>
+        <div class="flex flex-wrap gap-3 font-mono text-xs">
+          <a href="mailto:heyaryanshandilya@gmail.com" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-butterPastel hover:text-butterDark transition-colors">Email</a>
+          <a href="https://linkedin.com/in/heyaryanshandilya" target="_blank" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-mistPastel hover:text-mistDark transition-colors">LinkedIn</a>
+          <a href="https://github.com" target="_blank" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-matchaPastel hover:text-matchaDark transition-colors">GitHub</a>
+        </div>
+      </div>
+
+      <!-- Closing Note -->
+      <div class="relative bg-butterPastel border border-[#EADBBD] p-6 rounded-lg shadow-sticky rotate-1 hover:rotate-0 transition-transform max-w-md">
+        <div class="absolute -top-3 left-8 w-16 h-5 washi-strip -rotate-2 pointer-events-none"></div>
+        <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark font-medium block mb-1">Sign-off</span>
+        <p class="font-hand text-xl text-butterDark leading-snug">
+          I'm still learning, still shipping, still occasionally wrong. If that sounds like a person worth working with — let's talk.
+        </p>
+      </div>
+
+      <div class="flex justify-between items-center text-xs font-mono text-leadMuted pt-4 border-t border-borderPencil/50">
+        <span>© 2026 Aryan Sharma</span>
+        <span>Gurugram, India</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- POP-OUT STICKER CORNER (Bottom Right Victory Sign) -->
+</body>
+</html>
