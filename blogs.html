@@ -45,12 +45,31 @@
       }
     }
   </script>
+  <script>
+    // Reveal the page only after Tailwind's runtime compile has applied styles,
+    // preventing an unstyled-flash reflow that can shift scroll position on load.
+    window.addEventListener('load', () => {
+      requestAnimationFrame(() => document.body.classList.add('ready'));
+    });
+    // Fallback: never hide the page for more than 800ms, even if load is slow.
+    setTimeout(() => document.body.classList.add('ready'), 800);
+  </script>
+
 
   <style>
     body {
       background-color: #FAF8F5;
       background-image: radial-gradient(rgba(90, 80, 70, 0.14) 1px, transparent 1px);
       background-size: 18px 18px;
+      visibility: hidden;
+    }
+    body.ready {
+      visibility: visible;
+      animation: fadeIn 0.15s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     .washi-strip {
       background: rgba(235, 226, 214, 0.8);
@@ -169,13 +188,13 @@
           href: "beautiful-room.html"
         },
         {
-          title: "Code as a Living Organism",
-          excerpt: "Applying biological cell metabolism models to garbage collection, queue memory leaks, and distributed boundaries.",
-          tag: "Systems Thinking",
+          title: "Git and GitHub for Beginners",
+          excerpt: "A very normal explanation with trucks, farms, and zero unnecessary drama. No jargon, no drama, just how version control actually works.",
+          tag: "Engineering",
           tagBg: "bg-matchaPastel", tagText: "text-matchaDark",
-          readTime: "Coming soon",
-          status: "upcoming",
-          href: "code-organism.html"
+          readTime: "7 min read",
+          status: "published",
+          href: "git-and-github.html"
         },
         {
           title: "The Feynman Razor for Engineers",
@@ -259,7 +278,7 @@
         <a href="index.html" class="hover:text-ink underline decoration-dashed">← Back to System Specs & Experience</a>
         <div class="flex gap-4 text-leadMuted">
           <span>© 2026 Aryan Sharma</span>
-          <span>Pune, India</span>
+          <span>Gurugram, India</span>
         </div>
       </div>
     </footer>

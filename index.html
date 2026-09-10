@@ -51,11 +51,30 @@
     }
   </script>
 
+  <script>
+    // Reveal the page only after Tailwind's runtime compile has applied styles,
+    // preventing an unstyled-flash reflow that can shift scroll position on load.
+    window.addEventListener('load', () => {
+      requestAnimationFrame(() => document.body.classList.add('ready'));
+    });
+    // Fallback: never hide the page for more than 800ms, even if load is slow.
+    setTimeout(() => document.body.classList.add('ready'), 800);
+  </script>
+
   <style>
     body {
       background-color: #FAF8F5;
       background-image: radial-gradient(rgba(90, 80, 70, 0.14) 1px, transparent 1px);
       background-size: 18px 18px;
+      visibility: hidden;
+    }
+    body.ready {
+      visibility: visible;
+      animation: fadeIn 0.15s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     .washi-strip {
       background: rgba(235, 226, 214, 0.8);
@@ -156,7 +175,7 @@
           </h1>
 
           <p class="text-base sm:text-lg text-lead leading-relaxed">
-            I treat code the way you'd treat any living organism—adaptive, you don't just build it once, you keep tending to it. That instinct is the same whether I'm shipping a feature or writing a sentence.
+            I treat code the way you'd treat any living organism—adaptive — you don't just build it once, you keep tending to it. That instinct is the same whether I'm shipping a feature or writing a sentence.
           </p>
         </div>
 
@@ -168,7 +187,8 @@
             <div class="absolute -top-3 left-6 w-16 h-5 washi-strip rotate-1 pointer-events-none"></div>
             <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark font-medium block mb-1">What I believe in</span>
             <p class="font-hand text-xl text-butterDark leading-snug">
-              I believe in shipping over perfecting. In owning the bug with my name on it. In learning loudly, not quietly. In being the engineer people hand hard, ambiguous problems to, trusting I'll figure it out.</p>
+              I believe in shipping over perfecting. In owning the bug with my name on it. In learning loudly, not quietly. In being the kind of engineer people can hand hard, ambiguous problems to — and trust I'll figure it out.
+            </p>
           </div>
 
           <!-- Note 2: On Systems -->
@@ -176,7 +196,7 @@
             <div class="absolute -top-3 left-6 w-16 h-5 washi-strip -rotate-2 pointer-events-none"></div>
             <span class="font-mono text-[10px] uppercase tracking-wider text-matchaDark font-medium block mb-1">On systems</span>
             <p class="font-hand text-xl text-matchaDark leading-snug">
-                Fast fingers can’t outrun a flawed mental model. Five minutes of diagramming saves five days of rewriting. The compass always matters more than the engine.
+              A bug isn't a mistake in the system. It's the system working exactly as built — just not as intended.
             </p>
           </div>
 
@@ -350,7 +370,7 @@
         <div class="absolute -top-3 left-8 w-16 h-5 washi-strip -rotate-1 pointer-events-none"></div>
         <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark font-medium block mb-1">On side projects</span>
         <p class="font-hand text-xl text-butterDark leading-snug">
-          None of these were assigned to me. I'm a learner first. I build the thing first and figure out ownership along the way.
+          None of these were assigned to me. I'm a learner first — I go build the thing, then figure out ownership along the way.
         </p>
       </div>
     </section>
@@ -373,7 +393,8 @@
         <div class="absolute -top-3 left-8 w-16 h-5 washi-strip rotate-2 pointer-events-none"></div>
         <span class="font-mono text-[10px] uppercase tracking-wider text-matchaDark font-medium block mb-1">On teaching</span>
         <p class="font-hand text-xl text-matchaDark leading-snug">
-        Feynman said if you can't explain it simply, you don't understand it. So I teach. It is the fastest way I know to find the gaps in my own thinking.        </p>
+          Feynman said if you can't explain it simply, you don't understand it. So I teach — it's the fastest way I know to find the gaps in my own thinking.
+        </p>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -384,21 +405,21 @@
             <img src="https://img.youtube.com/vi/x6XqA5pZ2bY/hqdefault.jpg" alt="What Exactly is an API? thumbnail" class="thumb-img w-full h-full object-cover" />
           </div>
           <div class="p-5 space-y-1.5">
-            <span class="font-mono text-[10px] uppercase tracking-wider text-matchaDark">Fundamentals</span>
+            <span class="font-mono text-[10px] uppercase tracking-wider text-matchaDark">Systems Thinking</span>
             <h3 class="font-serif text-base font-medium text-ink group-hover:underline">What Exactly is an API?</h3>
             <p class="text-xs text-lead leading-relaxed">Breaking down the term everyone uses and few explain simply.</p>
           </div>
         </a>
 
-        <!-- Video 2: Scale of Validation -->
-        <a href="https://www.youtube.com/watch?v=d4zBlVXlZQQ" target="_blank" class="group bg-card rounded-xl border border-borderPencil shadow-card overflow-hidden flex flex-col hover:shadow-sticky transition-shadow">
+        <!-- Video 2: What is Git and GitHub -->
+        <a href="https://youtu.be/d__z9JWcYsM" target="_blank" class="group bg-card rounded-xl border border-borderPencil shadow-card overflow-hidden flex flex-col hover:shadow-sticky transition-shadow">
           <div class="aspect-video bg-canvas border-b border-borderPencil relative overflow-hidden">
-            <img src="https://img.youtube.com/vi/d4zBlVXlZQQ/hqdefault.jpg" alt="Scale of Validation thumbnail" class="thumb-img w-full h-full object-cover" />
+            <img src="https://img.youtube.com/vi/fZYHIgphJtE/hqdefault.jpg" alt="What is Git and GitHub? Explained thumbnail" class="thumb-img w-full h-full object-cover" />
           </div>
           <div class="p-5 space-y-1.5">
-            <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark">Philosophy</span>
-            <h3 class="font-serif text-base font-medium text-ink group-hover:underline">Scale of Validation</h3>
-            <p class="text-xs text-lead leading-relaxed">On measuring your worth by the wrong yardsticks — and finding better ones.</p>
+            <span class="font-mono text-[10px] uppercase tracking-wider text-matchaDark">Engineering</span>
+            <h3 class="font-serif text-base font-medium text-ink group-hover:underline">What is Git and GitHub? Explained</h3>
+            <p class="text-xs text-lead leading-relaxed">Simple enough that a 10 year old could follow along — no jargon, just trucks and farms.</p>
           </div>
         </a>
 
@@ -516,13 +537,13 @@
         <div class="absolute -top-3 left-8 w-16 h-5 washi-strip -rotate-2 pointer-events-none"></div>
         <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark font-medium block mb-1">Sign-off</span>
         <p class="font-hand text-xl text-butterDark leading-snug">
-          I'm still learning, still shipping, still occasionally wrong. If that sounds like a person worth working with -> let's talk.
+          I'm still learning, still shipping, still occasionally wrong. If that sounds like a person worth working with — let's talk.
         </p>
       </div>
 
       <div class="flex justify-between items-center text-xs font-mono text-leadMuted pt-4 border-t border-borderPencil/50">
         <span>© 2026 Aryan Sharma</span>
-        <span>Pune, India</span>
+        <span>Gurugram, India</span>
       </div>
     </footer>
 

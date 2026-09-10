@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Git and GitHub for Beginners — Dispatch #02 — Aryan Sharma</title>
+  <meta name="description" content="Git is not scary. A plain-language explanation using trucks, farms, and zero unnecessary drama." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Fraunces', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            hand: ['Caveat', 'cursive'],
+          },
+          colors: {
+            canvas: '#FAF8F5',
+            card: '#FFFDFB',
+            borderPencil: '#E8E2D6',
+            ink: '#23211E',
+            lead: '#68655E',
+            leadMuted: '#949086',
+            matchaPastel: '#E2EBE5',
+            matchaDark: '#234230',
+            butterPastel: '#F9F4DF',
+            butterDark: '#5A4512',
+            mistPastel: '#E8ECEE',
+            mistDark: '#2D3E4E',
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(60, 50, 40, 0.04)',
+            'sticky': '0 6px 16px -2px rgba(60, 50, 40, 0.06)',
+            'cutout': '0 12px 30px -4px rgba(40, 30, 20, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+    // Reveal the page only after Tailwind's runtime compile has applied styles,
+    // preventing an unstyled-flash reflow that can shift scroll position on load.
+    window.addEventListener('load', () => {
+      requestAnimationFrame(() => document.body.classList.add('ready'));
+    });
+    // Fallback: never hide the page for more than 800ms, even if load is slow.
+    setTimeout(() => document.body.classList.add('ready'), 800);
+  </script>
+
+
+  <style>
+    body {
+      background-color: #FAF8F5;
+      background-image: radial-gradient(rgba(90, 80, 70, 0.14) 1px, transparent 1px);
+      background-size: 18px 18px;
+      visibility: hidden;
+    }
+    body.ready {
+      visibility: visible;
+      animation: fadeIn 0.15s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .washi-strip {
+      background: rgba(235, 226, 214, 0.8);
+      border-left: 1.5px dashed rgba(190, 175, 155, 0.6);
+      border-right: 1.5px dashed rgba(190, 175, 155, 0.6);
+    }
+  </style>
+</head>
+<body class="text-ink font-sans antialiased selection:bg-butterPastel min-h-screen">
+
+  <!-- Shared Header with full nav -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-canvas/90 border-b border-borderPencil py-3.5 px-6">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="font-serif text-lg tracking-tight text-ink hover:opacity-75 transition-opacity">
+        Aryan Sharma <span class="text-leadMuted font-mono text-xs font-normal">/ Thought Parlor</span>
+      </a>
+      <nav class="hidden sm:flex items-center gap-6 text-xs font-mono text-lead">
+        <a href="index.html#about" class="hover:text-ink transition-colors">Who Am I</a>
+        <a href="index.html#experience" class="hover:text-ink transition-colors">Experience</a>
+        <a href="index.html#projects" class="hover:text-ink transition-colors">Projects</a>
+        <a href="index.html#teaching" class="hover:text-ink transition-colors">Teaching</a>
+        <a href="blogs.html" class="text-ink font-medium">Dispatches</a>
+        <a href="index.html#connect" class="hover:text-ink transition-colors">Contact</a>
+      </nav>
+      <button id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Toggle navigation menu" class="sm:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8">
+        <span class="block w-5 h-[1.5px] bg-ink transition-transform origin-center" id="navBar1"></span>
+        <span class="block w-5 h-[1.5px] bg-ink transition-opacity" id="navBar2"></span>
+        <span class="block w-5 h-[1.5px] bg-ink transition-transform origin-center" id="navBar3"></span>
+      </button>
+    </div>
+    <nav id="mobileNav" class="sm:hidden hidden mt-3.5 pt-3.5 border-t border-borderPencil flex flex-col gap-3.5 px-1 text-sm font-mono text-lead">
+      <a href="index.html#about" class="hover:text-ink transition-colors">Who Am I</a>
+      <a href="index.html#experience" class="hover:text-ink transition-colors">Experience</a>
+      <a href="index.html#projects" class="hover:text-ink transition-colors">Projects</a>
+      <a href="index.html#teaching" class="hover:text-ink transition-colors">Teaching Adventures</a>
+      <a href="blogs.html" class="text-ink font-medium">Dispatches</a>
+      <a href="index.html#connect" class="hover:text-ink transition-colors">Contact</a>
+    </nav>
+  </header>
+
+  <script>
+    const navToggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const bar1 = document.getElementById('navBar1');
+    const bar3 = document.getElementById('navBar3');
+    let navOpen = false;
+    navToggle.addEventListener('click', () => {
+      navOpen = !navOpen;
+      mobileNav.classList.toggle('hidden', !navOpen);
+      navToggle.setAttribute('aria-expanded', String(navOpen));
+      bar1.style.transform = navOpen ? 'translateY(6px) rotate(45deg)' : '';
+      bar3.style.transform = navOpen ? 'translateY(-6px) rotate(-45deg)' : '';
+      bar1.parentElement.querySelector('#navBar2').style.opacity = navOpen ? '0' : '1';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navOpen = false;
+      mobileNav.classList.add('hidden');
+      navToggle.setAttribute('aria-expanded', 'false');
+      bar1.style.transform = '';
+      bar3.style.transform = '';
+      bar1.parentElement.querySelector('#navBar2').style.opacity = '1';
+    }));
+  </script>
+
+  <main class="max-w-6xl mx-auto px-6 py-12 space-y-10 pb-16">
+
+    <a href="blogs.html" class="inline-flex items-center gap-1.5 font-mono text-xs text-lead hover:text-ink transition-colors">
+      <span>←</span>
+      <span>Back to all Dispatches</span>
+    </a>
+
+    <article class="bg-card rounded-xl p-8 sm:p-12 border border-borderPencil shadow-card space-y-6 max-w-3xl mx-auto">
+      <div class="flex items-center justify-between text-xs font-mono text-leadMuted border-b border-borderPencil pb-4">
+        <span>DISPATCH #02 · ENGINEERING</span>
+        <span>7 MIN READ</span>
+      </div>
+
+      <div class="space-y-2">
+        <h1 class="font-serif text-3xl sm:text-4xl font-medium text-ink leading-tight">
+          Git and GitHub for Beginners
+        </h1>
+        <p class="font-mono text-xs text-lead">A very normal explanation with trucks, farms, and zero unnecessary drama.</p>
+      </div>
+
+      <div class="space-y-4 text-sm sm:text-base leading-relaxed text-ink/85">
+        <p>
+          Git is not scary. It only looks scary because people introduce it with words like version control, distributed system, repository, upstream origin, and then somehow expect you to be excited.
+        </p>
+
+        <p>
+          So forget all that for a minute. Let us first talk about the problem. Because Git did not show up one day just to make developers type weird commands into a black screen. It exists because working on code gets messy very quickly when more than one human touches it.
+        </p>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">First the very annoying problem</h2>
+
+        <p>
+          If you are building something alone, life is peaceful. You make a website. You change a button. You break a button. You fix the button. You deploy it. No one is touching your files. No one is renaming <code class="text-xs bg-canvas px-1.5 py-0.5 rounded border border-borderPencil">final_final_last_one.js</code> behind your back.
+        </p>
+
+        <p>
+          Now put five people on the same project. One person is building login. One is changing the homepage. One is fixing a bug. One has somehow changed three files they were not supposed to touch. All of this needs to become one working project.
+        </p>
+
+        <p>
+          The old-school imaginary solution is a pendrive. You put your updated files in it. Hand it to somebody. They copy their files. Then another person does the same. Eventually one unlucky person becomes the official code mixer, trying to figure out which file is newer and why two people edited the same line.
+        </p>
+
+        <p>
+          It works for about eleven minutes. Then it becomes chaos.
+        </p>
+
+        <p>
+          And then a new developer joins. New laptop. They need the project. Or somebody gets sick and has to work from home. Or you want to see what the code looked like before yesterday's brilliant change broke everything. You need a better system.
+        </p>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">The dream solution</h2>
+
+        <p>
+          What if every developer could keep a full copy of the project, make their own changes safely, save proper checkpoints, and share only the checked work with the team? What if the system could show what changed, when it changed, and who changed it?
+        </p>
+
+        <p>
+          That is the problem Git is here to solve. Git is the tool that tracks the history of your project and helps people work on it together without passing pendrives around like it is 2007.
+        </p>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">Now think of Git as a truck driver</h2>
+
+        <p>
+          You have crops at your house. In our story, the crops are the code changes sitting on your laptop. You want to send the good crops to the main farm or godown, where everyone can access them. Git is your truck driver.
+        </p>
+
+        <figure class="my-6 space-y-2">
+          <img src="git-truck-diagram.png" alt="Diagram: Git is your truck driver, carrying checked and packed changes from your laptop to the shared farm (GitHub)" class="w-full rounded-lg border border-borderPencil" />
+          <figcaption class="text-xs font-mono text-leadMuted text-center">The truck analogy. Your code stays with you until you deliberately pack and send it.</figcaption>
+        </figure>
+
+        <p>
+          The truck driver does not randomly grab every crop you own and send it away. You tell them exactly what to take. That small detail is why Git feels confusing at first, but it is also why it is useful.
+        </p>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">What the commands are actually doing</h2>
+
+        <ul class="space-y-3 list-none pl-0">
+          <li><code class="text-xs bg-canvas px-1.5 py-0.5 rounded border border-borderPencil">git status</code> — Ask the truck driver what has changed at your house. What is new? What is modified? What is waiting around?</li>
+          <li><code class="text-xs bg-canvas px-1.5 py-0.5 rounded border border-borderPencil">git add</code> — Pack selected crops into the truck. You are saying, yes, I want this change to be part of my next checkpoint.</li>
+          <li><code class="text-xs bg-canvas px-1.5 py-0.5 rounded border border-borderPencil">git commit</code> — Seal the packed truck load and give it a tiny label, like "fixed login button" or "added dark mode." That sealed load is a commit.</li>
+          <li><code class="text-xs bg-canvas px-1.5 py-0.5 rounded border border-borderPencil">git push</code> — Send your sealed truck load to the shared farm online, where your team can see it.</li>
+          <li><code class="text-xs bg-canvas px-1.5 py-0.5 rounded border border-borderPencil">git pull</code> — Bring the newest crops from the shared farm down to your own house, because your teammates might have sent something while you were busy.</li>
+        </ul>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">Commits are not just saves</h2>
+
+        <p>
+          A commit is a checkpoint with a message. Think of it like taking a photo of the project at one sensible moment. Not every single sneeze needs a photo. But when you finish something meaningful, take one.
+        </p>
+
+        <p>
+          Good commit messages make future-you very happy. "fixed stuff" is technically a message, but future-you will look at it and quietly lose respect for present-you. "fix checkout total when cart is empty" is much better. Now you know exactly what happened.
+        </p>
+
+        <!-- Sticky note: commit messages -->
+        <div class="relative bg-butterPastel border border-[#EADBBD] p-6 rounded-lg shadow-sticky rotate-1 hover:rotate-0 transition-transform max-w-md">
+          <div class="absolute -top-3 left-8 w-16 h-5 washi-strip -rotate-1 pointer-events-none"></div>
+          <span class="font-mono text-[10px] uppercase tracking-wider text-butterDark font-medium block mb-1">On commit messages</span>
+          <p class="font-hand text-xl text-butterDark leading-snug">
+            "fixed stuff" is a message the way a shrug is an answer. Future-you deserves better.
+          </p>
+        </div>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">Okay, then what is GitHub?</h2>
+
+        <p>
+          Git and GitHub are related, but they are not twins. Git is the system on your computer that tracks the project history. GitHub is one popular online place where you can store that Git project and collaborate with other people.
+        </p>
+
+        <p>
+          So Git is the truck system. GitHub is the shared farm or godown. You can use Git without GitHub. You can also use other online farms, like GitLab or Bitbucket. GitHub is just the one you will hear about a lot.
+        </p>
+
+        <figure class="my-6 space-y-2">
+          <img src="git-workflow-diagram.png" alt="Diagram: A normal Git and GitHub workflow — make changes, commit, push, teammates pull" class="w-full rounded-lg border border-borderPencil" />
+          <figcaption class="text-xs font-mono text-leadMuted text-center">The normal loop. Make changes, commit them locally, push them online, then pull in your team's latest work.</figcaption>
+        </figure>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">How a team does not step on each other</h2>
+
+        <p>
+          In a team, people usually do not all work on the exact same copy at the exact same time and pray. They create branches. A branch is like taking a small side road from the main road. You can build a new feature there without disturbing the main project.
+        </p>
+
+        <p>
+          When your feature is ready, you ask to bring it back into the main road. That process is called a merge. Sometimes Git can do it automatically because everyone touched different things. Very nice. Everybody wins.
+        </p>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">And yes, merge conflicts happen</h2>
+
+        <p>
+          A merge conflict happens when two people change the same part of the same file in different ways. Git looks at both versions and says, "I am not going to guess which one of you is correct. Please sort this out, humans." Honestly, fair.
+        </p>
+
+        <p>
+          It is not Git punishing you. It is Git stopping you from silently deleting someone else's work. You open the file, look at both changes, decide what the final code should be, save it, and then make a commit. Conflict solved. Mostly with snacks.
+        </p>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">The one-minute version</h2>
+
+        <div class="overflow-hidden rounded-lg border border-borderPencil">
+          <table class="w-full text-sm">
+            <tbody class="divide-y divide-borderPencil">
+              <tr class="bg-canvas">
+                <td class="px-4 py-2.5 font-mono text-xs font-medium text-ink w-32">Git</td>
+                <td class="px-4 py-2.5 text-lead">Tracks your project's history on your computer.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5 font-mono text-xs font-medium text-ink">GitHub</td>
+                <td class="px-4 py-2.5 text-lead">An online place to store and share a Git project.</td>
+              </tr>
+              <tr class="bg-canvas">
+                <td class="px-4 py-2.5 font-mono text-xs font-medium text-ink">Commit</td>
+                <td class="px-4 py-2.5 text-lead">A named checkpoint you can return to.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5 font-mono text-xs font-medium text-ink">Push</td>
+                <td class="px-4 py-2.5 text-lead">Send your commits to GitHub.</td>
+              </tr>
+              <tr class="bg-canvas">
+                <td class="px-4 py-2.5 font-mono text-xs font-medium text-ink">Pull</td>
+                <td class="px-4 py-2.5 text-lead">Bring your team's newest commits to your computer.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5 font-mono text-xs font-medium text-ink">Merge conflict</td>
+                <td class="px-4 py-2.5 text-lead">Git needs a human to choose between overlapping changes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="font-serif text-xl font-medium text-ink pt-2">Final thing</h2>
+
+        <p>
+          Do not try to memorize Git on day one. Use it on a tiny project. Make one file. Change it. Check status. Add it. Commit it. Push it. Pull it. Break something. Go back to an older commit. Once you have done the loop a few times, the commands stop being magic words.
+        </p>
+
+        <p>
+          Git is basically a very organised memory for your project. GitHub is the place where that memory can hang out with your team. And the truck? The truck is still doing great work.
+        </p>
+      </div>
+
+      <!-- Sticky note: reader takeaway -->
+      <div class="relative bg-matchaPastel border border-[#C9D9CE] p-6 rounded-lg shadow-sticky -rotate-1 hover:rotate-0 transition-transform max-w-md">
+        <div class="absolute -top-3 left-8 w-16 h-5 washi-strip rotate-1 pointer-events-none"></div>
+        <span class="font-mono text-[10px] uppercase tracking-wider text-matchaDark font-medium block mb-1">Margin note</span>
+        <p class="font-hand text-xl text-matchaDark leading-snug">
+          I wrote this after explaining Git to a teammate for the third time using three different metaphors. The truck one finally stuck.
+        </p>
+      </div>
+    </article>
+
+    <!-- Post navigation -->
+    <div class="max-w-3xl mx-auto flex justify-between items-center text-xs font-mono text-lead pt-2">
+      <a href="blogs.html" class="hover:text-ink underline decoration-dashed">← All Dispatches</a>
+      <span class="text-leadMuted">More dispatches coming soon</span>
+    </div>
+
+    <footer id="connect" class="pt-8 border-t border-borderPencil space-y-8">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
+        <div class="space-y-2">
+          <h2 class="font-serif text-3xl font-medium text-ink">Let's connect.</h2>
+          <p class="text-sm text-lead">Available for Java backend systems and Agentic AI engineering roles.</p>
+        </div>
+        <div class="flex flex-wrap gap-3 font-mono text-xs">
+          <a href="mailto:heyaryanshandilya@gmail.com" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-butterPastel hover:text-butterDark transition-colors">Email</a>
+          <a href="https://linkedin.com/in/heyaryanshandilya" target="_blank" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-mistPastel hover:text-mistDark transition-colors">LinkedIn</a>
+          <a href="https://github.com" target="_blank" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-matchaPastel hover:text-matchaDark transition-colors">GitHub</a>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs font-mono text-lead pt-4 border-t border-borderPencil/50">
+        <a href="index.html" class="hover:text-ink underline decoration-dashed">← Back to System Specs & Experience</a>
+        <div class="flex gap-4 text-leadMuted">
+          <span>© 2026 Aryan Sharma</span>
+          <span>Gurugram, India</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</body>
+</html>
