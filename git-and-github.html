@@ -5,7 +5,149 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Git and GitHub for Beginners: Dispatch #02: Aryan Sharma</title>
   <meta name="description" content="Git is not scary. A plain-language explanation using trucks, farms, and zero unnecessary drama." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Aryan Sharma" />
+  <link rel="canonical" href="https://realaryansharma.github.io/portfolio/git-and-github.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Git and GitHub for Beginners: Dispatch #02" />
+  <meta property="og:description" content="Git is not scary. A plain-language explanation using trucks, farms, and zero unnecessary drama." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://realaryansharma.github.io/portfolio/git-and-github.html" />
+  <meta property="og:site_name" content="Aryan Sharma / Thought Parlor" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="article:author" content="Aryan Sharma" />
+  <meta property="article:section" content="Engineering" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Git and GitHub for Beginners: Dispatch #02" />
+  <meta name="twitter:description" content="A very normal explanation with trucks, farms, and zero unnecessary drama. No jargon, just how version control actually works." />
+
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E" />
+
+  <!-- Structured Data: Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Git and GitHub for Beginners",
+    "description": "Git is not scary. A plain-language explanation using trucks, farms, and zero unnecessary drama.",
+    "author": {
+      "@type": "Person",
+      "name": "Aryan Sharma",
+      "url": "https://realaryansharma.github.io/portfolio/index.html"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Aryan Sharma"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://realaryansharma.github.io/portfolio/git-and-github.html"
+    },
+    "url": "https://realaryansharma.github.io/portfolio/git-and-github.html",
+    "articleSection": "Engineering",
+    "inLanguage": "en"
+  }
+  </script>
+
+  <!-- Structured Data: HowTo (basic Git workflow) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the basic Git workflow",
+    "description": "The five-step loop for tracking changes with Git and sharing them with a team through GitHub.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Check status",
+        "text": "Run git status to see what has changed: what is new, what is modified, what is waiting to be saved.",
+        "itemListElement": { "@type": "HowToDirection", "text": "git status" }
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Stage your changes",
+        "text": "Run git add to pack the changes you want included in your next checkpoint.",
+        "itemListElement": { "@type": "HowToDirection", "text": "git add" }
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Commit your changes",
+        "text": "Run git commit to seal the staged changes with a short message describing what changed.",
+        "itemListElement": { "@type": "HowToDirection", "text": "git commit" }
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Push to GitHub",
+        "text": "Run git push to send your committed changes to the shared repository online.",
+        "itemListElement": { "@type": "HowToDirection", "text": "git push" }
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Pull your team's changes",
+        "text": "Run git pull to bring your teammates' latest commits down to your own computer.",
+        "itemListElement": { "@type": "HowToDirection", "text": "git pull" }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between Git and GitHub?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Git is the system on your computer that tracks a project's history. GitHub is one popular online place to store that Git project and collaborate with other people. You can use Git without GitHub, and there are other online hosts like GitLab or Bitbucket."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a commit in Git?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A commit is a named checkpoint in your project's history, like taking a photo of the project at one meaningful moment. A good commit message describes exactly what changed, such as 'fix checkout total when cart is empty'."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a merge conflict?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A merge conflict happens when two people change the same part of the same file in different ways. Git cannot guess which version is correct, so it asks a human to open the file, compare both changes, decide on the final code, and commit the result."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a branch in Git?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A branch is a side road off the main project, letting you build a new feature without disturbing the main codebase. When the feature is ready, it gets merged back into the main branch."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: Breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://realaryansharma.github.io/portfolio/index.html" },
+      { "@type": "ListItem", "position": 2, "name": "Dispatches", "item": "https://realaryansharma.github.io/portfolio/blogs.html" },
+      { "@type": "ListItem", "position": 3, "name": "Git and GitHub for Beginners", "item": "https://realaryansharma.github.io/portfolio/git-and-github.html" }
+    ]
+  }
+  </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
