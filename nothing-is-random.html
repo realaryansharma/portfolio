@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nothing Is Random: Dispatch #06: Aryan Sharma</title>
+  <meta name="description" content="Is anything truly random? How computers fake randomness with seeds and timing jitter, why security needs real entropy, and how lava lamps help secure the internet." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Aryan Sharma" />
+  <link rel="canonical" href="https://realaryansharma.github.io/portfolio/nothing-is-random.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nothing Is Random: Dispatch #06" />
+  <meta property="og:description" content="Nothing is random. How computers fake it, how they borrow real chaos, and why lava lamps help secure the internet." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://realaryansharma.github.io/portfolio/nothing-is-random.html" />
+  <meta property="og:site_name" content="Aryan Sharma / Thought Parlor" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="article:author" content="Aryan Sharma" />
+  <meta property="article:section" content="Engineering" />
+  <meta property="article:published_time" content="2026-10-26" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Nothing Is Random: Dispatch #06" />
+  <meta name="twitter:description" content="Randomness is just a word for what we can&#x27;t keep track of. How computers fake it, and how lava lamps help secure the internet." />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E" />
+
+  <!-- Structured Data: Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Nothing Is Random",
+    "description": "Is anything truly random? How computers fake randomness with seeds and timing jitter, why security needs real entropy, and how lava lamps help secure the internet.",
+    "author": {
+      "@type": "Person",
+      "name": "Aryan Sharma",
+      "url": "https://realaryansharma.github.io/portfolio/index.html",
+      "sameAs": [
+        "https://linkedin.com/in/heyaryanshandilya",
+        "https://github.com/realaryansharma"
+      ]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Aryan Sharma"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://realaryansharma.github.io/portfolio/nothing-is-random.html"
+    },
+    "url": "https://realaryansharma.github.io/portfolio/nothing-is-random.html",
+    "datePublished": "2026-10-26",
+    "dateModified": "2026-10-26",
+    "articleSection": "Engineering",
+    "inLanguage": "en",
+    "wordCount": 433
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can a computer generate truly random numbers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not by calculation alone. A computer follows instructions, so the same input always gives the same output. Software random number generators use a seed and a formula to produce numbers that only look random. Real randomness has to be borrowed from outside the program, such as timing between keystrokes, mouse movement, or electrical noise."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a pseudo-random number generator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A pseudo-random number generator is a formula that starts from a seed value and produces a sequence that looks random but is fully determined by that seed. Give it the same seed and it produces the same sequence every time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does Cloudflare use lava lamps?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cloudflare films a wall of lava lamps in its San Francisco office. The unpredictable movement of the wax in the footage is used as an extra source of entropy that helps seed random number generation for encryption."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: Breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://realaryansharma.github.io/portfolio/index.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Dispatches",
+        "item": "https://realaryansharma.github.io/portfolio/blogs.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Nothing Is Random",
+        "item": "https://realaryansharma.github.io/portfolio/nothing-is-random.html"
+      }
+    ]
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Fraunces', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            hand: ['Caveat', 'cursive'],
+          },
+          colors: {
+            canvas: '#FAF8F5',
+            card: '#FFFDFB',
+            borderPencil: '#E8E2D6',
+            ink: '#23211E',
+            lead: '#68655E',
+            leadMuted: '#949086',
+            matchaPastel: '#E2EBE5',
+            matchaDark: '#234230',
+            butterPastel: '#F9F4DF',
+            butterDark: '#5A4512',
+            mistPastel: '#E8ECEE',
+            mistDark: '#2D3E4E',
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(60, 50, 40, 0.04)',
+            'sticky': '0 6px 16px -2px rgba(60, 50, 40, 0.06)',
+            'cutout': '0 12px 30px -4px rgba(40, 30, 20, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+    // Reveal the page only after Tailwind's runtime compile has applied styles,
+    // preventing an unstyled-flash reflow that can shift scroll position on load.
+    window.addEventListener('load', () => {
+      requestAnimationFrame(() => document.body.classList.add('ready'));
+    });
+    // Fallback: never hide the page for more than 800ms, even if load is slow.
+    setTimeout(() => document.body.classList.add('ready'), 800);
+  </script>
+
+  <style>
+    body {
+      background-color: #FAF8F5;
+      background-image: radial-gradient(rgba(90, 80, 70, 0.14) 1px, transparent 1px);
+      background-size: 18px 18px;
+      visibility: hidden;
+    }
+    body.ready {
+      visibility: visible;
+      animation: fadeIn 0.15s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .washi-strip {
+      background: rgba(235, 226, 214, 0.8);
+      border-left: 1.5px dashed rgba(190, 175, 155, 0.6);
+      border-right: 1.5px dashed rgba(190, 175, 155, 0.6);
+    }
+    section[id], article[id] {
+      scroll-margin-top: 5.5rem;
+    }
+  </style>
+</head>
+<body class="text-ink font-sans antialiased selection:bg-butterPastel min-h-screen">
+
+  <!-- Shared Header with full nav -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-canvas/90 border-b border-borderPencil py-3.5 px-6">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="font-serif text-lg tracking-tight text-ink hover:opacity-75 transition-opacity">
+        Aryan Sharma <span class="text-leadMuted font-mono text-xs font-normal">/ Thought Parlor</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden sm:flex items-center gap-6 text-xs font-mono text-lead">
+        <a href="index.html#about" class="hover:text-ink transition-colors">Who Am I</a>
+        <a href="index.html#experience" class="hover:text-ink transition-colors">Experience</a>
+        <a href="index.html#projects" class="hover:text-ink transition-colors">Projects</a>
+        <a href="index.html#teaching" class="hover:text-ink transition-colors">Teaching</a>
+        <a href="blogs.html" class="text-ink font-medium">Dispatches</a>
+        <a href="index.html#connect" class="hover:text-ink transition-colors">Contact</a>
+      </nav>
+
+      <!-- Mobile nav toggle -->
+      <button id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Toggle navigation menu" class="sm:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8">
+        <span class="block w-5 h-[1.5px] bg-ink transition-transform origin-center" id="navBar1"></span>
+        <span class="block w-5 h-[1.5px] bg-ink transition-opacity" id="navBar2"></span>
+        <span class="block w-5 h-[1.5px] bg-ink transition-transform origin-center" id="navBar3"></span>
+      </button>
+    </div>
+
+    <!-- Mobile nav panel -->
+    <nav id="mobileNav" class="sm:hidden hidden mt-3.5 pt-3.5 border-t border-borderPencil flex flex-col gap-3.5 px-1 text-sm font-mono text-lead">
+      <a href="index.html#about" class="hover:text-ink transition-colors">Who Am I</a>
+      <a href="index.html#experience" class="hover:text-ink transition-colors">Experience</a>
+      <a href="index.html#projects" class="hover:text-ink transition-colors">Projects</a>
+      <a href="index.html#teaching" class="hover:text-ink transition-colors">Teaching Adventures</a>
+      <a href="blogs.html" class="text-ink font-medium">Dispatches</a>
+      <a href="index.html#connect" class="hover:text-ink transition-colors">Contact</a>
+    </nav>
+  </header>
+
+  <script>
+    const navToggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const bar1 = document.getElementById('navBar1');
+    const bar3 = document.getElementById('navBar3');
+    let navOpen = false;
+    navToggle.addEventListener('click', () => {
+      navOpen = !navOpen;
+      mobileNav.classList.toggle('hidden', !navOpen);
+      navToggle.setAttribute('aria-expanded', String(navOpen));
+      bar1.style.transform = navOpen ? 'translateY(6px) rotate(45deg)' : '';
+      bar3.style.transform = navOpen ? 'translateY(-6px) rotate(-45deg)' : '';
+      bar1.parentElement.querySelector('#navBar2').style.opacity = navOpen ? '0' : '1';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navOpen = false;
+      mobileNav.classList.add('hidden');
+      navToggle.setAttribute('aria-expanded', 'false');
+      bar1.style.transform = '';
+      bar3.style.transform = '';
+      bar1.parentElement.querySelector('#navBar2').style.opacity = '1';
+    }));
+  </script>
+
+  <main class="max-w-6xl mx-auto px-6 py-12 space-y-10 pb-16">
+
+    <!-- Breadcrumb back to listing -->
+    <a href="blogs.html" class="inline-flex items-center gap-1.5 font-mono text-xs text-lead hover:text-ink transition-colors">
+      <span>←</span>
+      <span>Back to all Dispatches</span>
+    </a>
+
+    <!-- Full Featured Essay -->
+    <article id="nothing-is-random" class="bg-card rounded-xl p-8 sm:p-12 border border-borderPencil shadow-card space-y-6 max-w-3xl mx-auto">
+      <div class="flex items-center justify-between text-xs font-mono text-leadMuted border-b border-borderPencil pb-4">
+        <span>DISPATCH #06 · ENGINEERING</span>
+        <span>3 MIN READ</span>
+      </div>
+
+      <div class="space-y-2">
+        <h1 class="font-serif text-3xl sm:text-4xl font-medium text-ink leading-tight">
+          Nothing Is Random
+        </h1>
+        <p class="font-mono text-xs text-lead">Your coin flip, your dice, your lottery ticket. "Random" is just a word for what we can't keep track of.</p>
+      </div>
+
+      <div class="space-y-4 text-sm sm:text-base leading-relaxed text-ink/85">
+        <p>
+          Nothing is random. Not your coin flip. Not your dice. Not your lottery ticket. "Random" is just the word we use for what we cannot keep track of.
+        </p>
+
+        <h2 class="font-serif text-xl sm:text-2xl font-medium text-ink pt-2">The coin that was never random</h2>
+
+        <p>
+          Flip a coin. If you knew the exact force of your thumb, the angle, the air, and the surface it lands on, you would know how it lands before it lands. Researchers have even built coin-flipping machines that land the same side every time.
+        </p>
+
+        <p>
+          The coin was never random. You just cannot see everything.
+        </p>
+
+        <h2 class="font-serif text-xl sm:text-2xl font-medium text-ink pt-2">Computers cannot even pretend</h2>
+
+        <p>
+          Now computers. They cannot pretend to not know. You give them instructions, and the same input produces the same output, every single time. That is exactly why we trust them.
+        </p>
+
+        <p>
+          But randomness is the one thing you cannot calculate. Because if you can calculate it, it was never random.
+        </p>
+
+        <h2 class="font-serif text-xl sm:text-2xl font-medium text-ink pt-2">How a machine fakes it</h2>
+
+        <p>
+          So how does a computer fake it? It grabs something humans cannot track. The exact time, down to the nanosecond. The tiny timing jitter inside your processor. It mixes those together, throws them into a formula, and out comes something that looks random.
+        </p>
+
+        <p>
+          Underneath, there is always a pattern. If you have written any Java, you have met this. Create a java.util.Random with the same seed and you get the same "random" numbers on every run. It is a very convincing flip book, not a dice roll.
+        </p>
+
+        <!-- Pulled quote callout -->
+        <div class="p-6 rounded-lg bg-mistPastel/70 border-l-4 border-[#C3CFD5] space-y-1.5 my-6">
+          <p class="font-serif text-xl sm:text-2xl text-mistDark italic leading-relaxed">
+            "'Random' is just a word for what we can't keep track of."
+          </p>
+          <span class="block text-xs font-mono text-mistDark/80">Aryan Sharma</span>
+        </div>
+
+        <h2 class="font-serif text-xl sm:text-2xl font-medium text-ink pt-2">Borrowing chaos from the outside world</h2>
+
+        <p>
+          For passwords and encryption, a flip book is not enough. So the machine looks outside itself. The microseconds between your keystrokes. The tiny wiggle of your mouse. Electrical noise humming inside the chip. Chaos it cannot predict, so neither can an attacker.
+        </p>
+
+        <p>
+          In Java, SecureRandom exists for exactly this reason. It leans on the operating system's pool of unpredictable events instead of a tidy formula.
+        </p>
+
+        <p>
+          And my favourite example: Cloudflare keeps a wall of lava lamps in its San Francisco lobby. A camera films the wax as it floats, and that footage helps secure parts of the internet.
+        </p>
+
+        <h2 class="font-serif text-xl sm:text-2xl font-medium text-ink pt-2">Randomness, borrowed from our ignorance</h2>
+
+        <p>
+          But even the lava follows physics. It is just too complex for anyone to follow. So the most precise machine we have ever built borrows its randomness from our ignorance.
+        </p>
+
+        <p>
+          Which makes me wonder: is randomness nothing but the inability of the human mind to understand what is going on? And if nothing is truly random, are your choices? I chased that edge in <a href="robot-who-couldnt-wake-up.html" class="underline decoration-dashed hover:text-ink">The Robot Who Couldn't Wake Up</a>, and I still do not have a clean answer.
+        </p>
+
+      </div>
+
+      <!-- Sticky note: why I wrote this -->
+      <div class="relative bg-mistPastel border border-[#D3DCE0] p-6 rounded-lg shadow-sticky -rotate-1 hover:rotate-0 transition-transform max-w-md">
+        <div class="absolute -top-3 right-10 w-16 h-5 washi-strip rotate-1 pointer-events-none"></div>
+        <span class="font-mono text-[10px] uppercase tracking-wider text-mistDark font-medium block mb-1">Margin note</span>
+        <p class="font-hand text-xl text-mistDark leading-snug">
+          Same seed, same numbers, every run. Try it in Java and watch the "random" repeat.
+        </p>
+      </div>
+    </article>
+
+    <!-- Post navigation -->
+    <div class="max-w-3xl mx-auto flex justify-between items-center text-xs font-mono text-lead pt-2">
+      <a href="blogs.html" class="hover:text-ink underline decoration-dashed">← All Dispatches</a>
+      <a href="work-life-balance.html" class="hover:text-ink underline decoration-dashed">Next: You Don't Balance. You Live. →</a>
+    </div>
+
+    <!-- Section: Connect & Footer -->
+    <footer id="connect" class="pt-8 border-t border-borderPencil space-y-8">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
+        <div class="space-y-2">
+          <h2 class="font-serif text-3xl font-medium text-ink">Let's connect.</h2>
+          <p class="text-sm text-lead">Available for Java backend systems and Agentic AI engineering roles.</p>
+        </div>
+        <div class="flex flex-wrap gap-3 font-mono text-xs">
+          <a href="mailto:heyaryanshandilya@gmail.com" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-butterPastel hover:text-butterDark transition-colors">Email</a>
+          <a href="https://linkedin.com/in/heyaryanshandilya" target="_blank" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-mistPastel hover:text-mistDark transition-colors">LinkedIn</a>
+          <a href="https://github.com/realaryansharma" target="_blank" class="px-3.5 py-2 rounded-md bg-card border border-borderPencil hover:bg-matchaPastel hover:text-matchaDark transition-colors">GitHub</a>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs font-mono text-lead pt-4 border-t border-borderPencil/50">
+        <a href="index.html" class="hover:text-ink underline decoration-dashed">← Back to System Specs & Experience</a>
+        <div class="flex gap-4 text-leadMuted">
+          <span>© 2026 Aryan Sharma</span>
+          <span>Pune, India</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</body>
+</html>
